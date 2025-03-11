@@ -44,6 +44,7 @@ class DateExtractor(AbstractExtractor):
                 # Using a browser user agent, decreases the change of sites blocking this request - just a suggestion
                 # request.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko)
                 # Chrome/41.0.2228.0 Safari/537.36')
+                request.add_header("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0")
                 html = urllib2.build_opener().open(request).read()
 
             html = BeautifulSoup(html, "lxml")
