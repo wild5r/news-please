@@ -13,9 +13,14 @@ except ImportError:
     import urllib2
 
 # to improve performance, regex statements are compiled only once per module
-re_pub_date = re.compile(
-    r'([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?'
-)
+# Regex by Newspaper3k  - https://github.com/codelucas/newspaper/blob/master/newspaper/urls.py
+# r'([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?'
+pub_date_regexs = [
+    r'([\./\-]([0-3]{0,1}[0-9][/\-]{0,1}))([0-1]{0,1}[0-9])[\./\-_]((19|20)\d{2}[\./\-])',
+    r'([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?',
+]
+re_pub_date_regexs = [re.compile(regex) for regex in pub_date_regexs]
+
 re_class = re.compile("pubdate|timestamp|article_date|articledate|date", re.IGNORECASE)
 
 
@@ -29,7 +34,6 @@ class DateExtractor(AbstractExtractor):
 
     def _publish_date(self, item):
         """Returns the publish_date of the extracted article."""
-
         url = item['url']
         html = deepcopy(item['spider_response'].body)
         publish_date = None
@@ -66,11 +70,12 @@ class DateExtractor(AbstractExtractor):
 
     def _extract_from_url(self, url):
         """Try to extract from the article URL - simple but might work as a fallback"""
+        for regex in re_pub_date_regexs:
+            m = re.search(regex, url)
+            print(m)
+            if m:
+                return self.parse_date_str(m.group(0))
 
-        # Regex by Newspaper3k  - https://github.com/codelucas/newspaper/blob/master/newspaper/urls.py
-        m = re.search(re_pub_date, url)
-        if m:
-            return self.parse_date_str(m.group(0))
         return None
 
     def _extract_from_json(self, html):
