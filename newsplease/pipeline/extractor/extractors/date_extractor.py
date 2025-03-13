@@ -73,7 +73,6 @@ class DateExtractor(AbstractExtractor):
         """Try to extract from the article URL - simple but might work as a fallback"""
         for regex in re_pub_date_regexs:
             m = re.search(regex, url)
-            print(m)
             if m:
                 return self.parse_date_str(m.group(0))
 

@@ -78,5 +78,6 @@ class Extractor:
         item['article_author'] = article.author
         item['article_publish_date'] = article.publish_date
         item['article_language'] = article.language
+        item['article_canonical_link'] = article.canonical_link
 
         return item

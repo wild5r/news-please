@@ -11,3 +11,4 @@ class ArticleCandidate:
     publish_date = None
     extractor = None
     language = None
+    canonical_link = None

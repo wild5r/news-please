@@ -5,6 +5,7 @@ from .comparer_description import ComparerDescription
 from .comparer_text import ComparerText
 from .comparer_title import ComparerTitle
 from .comparer_topimage import ComparerTopimage
+from .comparer_canonical_link import ComparerCanonicalLink
 from ..article_candidate import ArticleCandidate
 
 
@@ -20,6 +21,7 @@ class Comparer:
         self.comparer_author = ComparerAuthor()
         self.comparer_date = ComparerDate()
         self.comparer_language = ComparerLanguage()
+        self.comparer_canonical_link = ComparerCanonicalLink()
 
     def compare(self, item, article_candidates):
         """Compares the article candidates using the different submodules and saves the best results in
@@ -39,4 +41,6 @@ class Comparer:
         result.author = self.comparer_author.extract(item, article_candidates)
         result.publish_date = self.comparer_date.extract(item, article_candidates)
         result.language = self.comparer_language.extract(item, article_candidates)
+        result.canonical_link = self.comparer_canonical_link.extract(item, article_candidates)
+
         return result

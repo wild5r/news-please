@@ -319,7 +319,8 @@ class ExtractedInformationStorage(object):
             'title_rss': ExtractedInformationStorage.ensure_str(item['rss_title']),
             'source_domain': ExtractedInformationStorage.ensure_str(item['source_domain']),
             'maintext': item['article_text'],
-            'url': item['url']
+            'url': item['url'],
+            'canonical_link': item['article_canonical_link']
         }
 
         # clean values
@@ -355,6 +356,7 @@ class ExtractedInformationStorage(object):
         news_article.source_domain = item['source_domain']
         news_article.maintext = item['maintext']
         news_article.url = item['url']
+        news_article.canonical_link = item['canonical_link']
         return news_article
 
 class PostgresqlStorage(ExtractedInformationStorage):

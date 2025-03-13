@@ -3,6 +3,7 @@ class NewsArticle(object):
     Class representing a single news article containing all the information that news-please can extract.
     """
     authors = []
+    canonical_link = None
     date_download = None
     date_modify = None
     date_publish = None
@@ -37,6 +38,7 @@ class NewsArticle(object):
         """
         return {
             'authors': self.authors,
+            'canonical_link': self.canonical_link,
             'date_download': self.date_download,
             'date_modify': self.date_modify,
             'date_publish': self.date_publish,

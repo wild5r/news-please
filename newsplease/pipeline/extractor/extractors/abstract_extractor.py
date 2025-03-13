@@ -45,6 +45,10 @@ class AbstractExtractor:
         """Returns the publish date of the extracted article."""
         return None
 
+    def _canonical_link(self, item):
+        """Returns the canonical link of the extracted article."""
+        return None
+
     def extract(self, item):
         """Executes all implemented functions on the given article and returns an
         object containing the recovered data.
@@ -62,5 +66,6 @@ class AbstractExtractor:
         article_candidate.author = self._author(item)
         article_candidate.publish_date = self._publish_date(item)
         article_candidate.language = self._language(item)
+        article_candidate.canonical_link = self._canonical_link(item)
 
         return article_candidate

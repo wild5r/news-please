@@ -46,5 +46,18 @@ class NewspaperExtractor(AbstractExtractor):
                 self.log.debug('%s: Newspaper failed to extract the date in the supported format,'
                               'Publishing date set to None' % item['url'])
         article_candidate.language = article.meta_lang
+        
+        # Extract canonical link
+        try:
+            article_candidate.canonical_link = article.canonical_link
+        except AttributeError:
+            # If newspaper3k doesn't provide canonical_link, try to extract it from meta tags
+            try:
+                canonical_meta = article.clean_doc.find('link', {'rel': 'canonical'})
+                if canonical_meta and canonical_meta.get('href'):
+                    article_candidate.canonical_link = canonical_meta['href']
+            except:
+                self.log.debug('%s: Failed to extract canonical link' % item['url'])
+                article_candidate.canonical_link = None
 
         return article_candidate
