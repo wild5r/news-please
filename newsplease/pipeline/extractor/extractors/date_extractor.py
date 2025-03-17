@@ -53,9 +53,9 @@ class DateExtractor(AbstractExtractor):
             if publish_date is None:
                 publish_date = self._extract_from_meta(html)
             if publish_date is None:
-                publish_date = self._extract_from_html_tag(html)
-            if publish_date is None:
                 publish_date = self._extract_from_url(url)
+            if publish_date is None:
+                publish_date = self._extract_from_html_tag(html)
         except Exception as e:
             # print(e.message, e.args)
             pass
